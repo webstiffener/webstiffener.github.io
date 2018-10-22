@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.jpg?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.jpg?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.jpg?v=6.4.1">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文 | Leon Xia  因很多人推荐去年推出的Fast.ai系列深度学习课程，决定上手学习。本指南记录了我在Windows10上搭建深度学习环境的详细过程以及踩过的坑(跑过了Lesson1.ipynb)，有需要的可以参考。本指南主要参考https://github.com/philferriere/dlwin，有一些改动。另外，课程的Forum http://forums.fast.ai/也是">
+<meta name="keywords" content="Fast.ai,深度学习,环境搭建,编程,Windows10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fast.ai环境配置指南(Windows10篇)">
+<meta property="og:url" content="https://xialeon.me/技能备忘/b0983528.html">
+<meta property="og:site_name" content="夏里昂的博客">
+<meta property="og:description" content="文 | Leon Xia  因很多人推荐去年推出的Fast.ai系列深度学习课程，决定上手学习。本指南记录了我在Windows10上搭建深度学习环境的详细过程以及踩过的坑(跑过了Lesson1.ipynb)，有需要的可以参考。本指南主要参考https://github.com/philferriere/dlwin，有一些改动。另外，课程的Forum http://forums.fast.ai/也是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_VS2015_Step-1.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_VS2015_Step-2.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_VS2015_Step-3.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_Anaconda_4.4.0.jpg">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_CUDA_8.0.61_Step-1.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_CUDA_8.0.61_Step-2.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_CUDA_8.0.61_Step-3.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_CUDA_8.0.61_Step-4.png">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Install_cuDNN_5.1_for_CUDA_8.0.jpg">
+<meta property="og:image" content="https://xialeon.me/技能备忘/b0983528/Execute_activate_dlwin27.jpg">
+<meta property="og:updated_time" content="2018-10-10T11:18:25.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fast.ai环境配置指南(Windows10篇)">
+<meta name="twitter:description" content="文 | Leon Xia  因很多人推荐去年推出的Fast.ai系列深度学习课程，决定上手学习。本指南记录了我在Windows10上搭建深度学习环境的详细过程以及踩过的坑(跑过了Lesson1.ipynb)，有需要的可以参考。本指南主要参考https://github.com/philferriere/dlwin，有一些改动。另外，课程的Forum http://forums.fast.ai/也是">
+<meta name="twitter:image" content="https://xialeon.me/技能备忘/b0983528/Install_VS2015_Step-1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xialeon.me/技能备忘/b0983528.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Fast.ai环境配置指南(Windows10篇) | 夏里昂的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">夏里昂的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-grav"></i> <br>关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-pied-piper"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xialeon.me/技能备忘/b0983528.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leon Xia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夏里昂的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fast.ai环境配置指南(Windows10篇)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-20T00:00:00+08:00">2018-01-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-10 19:18:25" itemprop="dateModified" datetime="2018-10-10T19:18:25+08:00">2018-10-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技能备忘/" itemprop="url" rel="index"><span itemprop="name">技能备忘</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文 | Leon Xia</p>
+<blockquote>
+<p>因很多人推荐去年推出的Fast.ai系列深度学习课程，决定上手学习。本指南记录了我在Windows10上搭建深度学习环境的详细过程以及踩过的坑(跑过了Lesson1.ipynb)，有需要的可以参考。本指南主要参考<a href="https://github.com/philferriere/dlwin" target="_blank" rel="noopener">https://github.com/philferriere/dlwin</a>，有一些改动。另外，课程的Forum <a href="http://forums.fast.ai/" target="_blank" rel="noopener">http://forums.fast.ai/</a>也是很不错的资源。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="安装VS2015"><a href="#安装VS2015" class="headerlink" title="安装VS2015"></a>安装VS2015</h1><p>Visual Studio 2015 Community Edition Update 3安装过程如下。最好解压后安装，否则中间可能会出现“安装包丢失或损坏”，解决办法是将安装文件解压出来的package文件夹复制到丢失的位置，然后点击重试。添加以下系统环境变量：</p>
+<ul>
+<li>在<code>PATH</code>中添加<code>C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin</code></li>
+<li>在<code>INCLUDE</code>中添加<code>C:\Program Files (x86)\Windows Kits\10\Include</code></li>
+<li>在<code>LIB</code>中添加<code>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x64</code>和<code>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64</code></li>
+</ul>
+<img src="/技能备忘/b0983528/Install_VS2015_Step-1.png">
+<img src="/技能备忘/b0983528/Install_VS2015_Step-2.png">
+<img src="/技能备忘/b0983528/Install_VS2015_Step-3.png">
+<h1 id="安装Anaconda"><a href="#安装Anaconda" class="headerlink" title="安装Anaconda"></a>安装Anaconda</h1><p>官网下载并安装Anaconda 4.4.0或最新版，我安装在C:\Fastai\anaconda3-4.4.0文件夹中，文件夹的位置和名字可以不一样，添加以下系统环境变量(注意替换C:\Fastai为你的安装位置)：</p>
+<ul>
+<li>创建系统环境变量<code>PYTHON_HOME</code>并添加<code>C:\Fastai\anaconda3-4.4.0</code></li>
+<li>在<code>PATH</code>中添加<code>%PYTHON_HOME%</code>，<code>%PYTHON_HOME%\Scripts</code>，<code>%PYTHON_HOME%\Library\bin</code></li>
+</ul>
+<img src="/技能备忘/b0983528/Install_Anaconda_4.4.0.jpg">
+<h1 id="创建深度学习环境dlwin27"><a href="#创建深度学习环境dlwin27" class="headerlink" title="创建深度学习环境dlwin27"></a>创建深度学习环境dlwin27</h1><p>这个过程会比较长，注意<code>python = 2.7</code>字段，Fast.ai课程推荐用2.7版本的python。即使上面安装的是Anaconda3.6，这里也可以创建2.7的环境，而且这个环境是独立，即便后面安装有问题也可以直接用<code>conda env remove -n dlwin27</code>删去重新再来，而不用担心卸载不完全的问题，这就是使用Anaconda的优点。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --yes -n dlwin27 python=2.7  numpy scipy mkl-service m2w64-toolchain libpython jupyter</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装CUDA-8-0-61"><a href="#安装CUDA-8-0-61" class="headerlink" title="安装CUDA 8.0.61"></a>安装CUDA 8.0.61</h1><p>从NVidia官网<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a>下载CUDA 8.0 (64-bit) ，我安装在C:\Fastai\cuda-8.0.61文件夹中，添加以下系统环境变量(注意替换C:\Fastai为你的安装位置)：</p>
+<ul>
+<li>创建系统环境变量<code>CUDA_PATH</code>并添加<code>C:\Fastai\cuda-8.0.61</code></li>
+<li>在<code>PATH</code>中添加<code>%CUDA_PATH%\bin</code>和<code>%CUDA_PATH%\libnvvp</code></li>
+</ul>
+<img src="/技能备忘/b0983528/Install_CUDA_8.0.61_Step-1.png">
+<img src="/技能备忘/b0983528/Install_CUDA_8.0.61_Step-2.png">
+<img src="/技能备忘/b0983528/Install_CUDA_8.0.61_Step-3.png">
+<img src="/技能备忘/b0983528/Install_CUDA_8.0.61_Step-4.png">
+<h1 id="安装cuDNN-v5-1-for-CUDA-8-0"><a href="#安装cuDNN-v5-1-for-CUDA-8-0" class="headerlink" title="安装cuDNN v5.1 for CUDA 8.0"></a>安装cuDNN v5.1 for CUDA 8.0</h1><p>在官网<a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="noopener">https://developer.nvidia.com/rdp/cudnn-download</a>下载cuDNN 5.1，将解压出来的三个文件夹 (bin, include, lib)中的文件复制到C:\Fastai\cuda-8.0.61对应同名文件夹中。并执行以下命令(会显示移动了5个文件)：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd C:\Fastai\anaconda3-4.4.0\envs\dlwin27</span><br><span class="line">md discard &amp; move cu*.dll discard</span><br></pre></td></tr></table></figure></p>
+<img src="/技能备忘/b0983528/Install_cuDNN_5.1_for_CUDA_8.0.jpg">
+<h1 id="安装必要的python包"><a href="#安装必要的python包" class="headerlink" title="安装必要的python包"></a>安装必要的python包</h1><ul>
+<li><p>在主文件夹下(一般为C:\Users\YOUR NAME)下的<code>.condarc</code>文件中添加以下内容，方便后面下载安装文件，注意该文件为<strong>隐藏文件</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">  - defaults</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>activate dlwin27</code>激活环境，再安装python包时才能安装到该环境中，以后每次使用该环境时都要执行这一句，执行完后命令行前面会出现(dlwin27)如下，退出时执行<code>deactivate</code>即可。</p>
+</li>
+</ul>
+<img src="/技能备忘/b0983528/Execute_activate_dlwin27.jpg">
+<ul>
+<li><p>有时没有conda对应的包就用pip安装，注意前面三个包的版本号，最后几个包是运行Lesson1.ipynb时提示要安装的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">conda install -y pygpu==0.7.5</span><br><span class="line">conda install -y theano==1.0.1</span><br><span class="line">pip install keras==1.2.2</span><br><span class="line">pip install matplotlib</span><br><span class="line">pip install pandas</span><br><span class="line">conda install -y PIL</span><br><span class="line">pip install sklearn</span><br><span class="line">conda install -y bcolz</span><br><span class="line">conda install -c menpo ffmpeg</span><br><span class="line">conda install -y h5py</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在主文件夹下(一般为C:\Users\YOUR NAME)下的<code>\.keras\keras.json</code>文件中的内容应改为和下面一致，如果原文件中有<code>&quot;image_data_format&quot;: &quot;channels_last&quot;</code>这一条，可能是因为安装了较高版本的keras。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;floatx&quot;: &quot;float32&quot;,</span><br><span class="line">    &quot;epsilon&quot;: 1e-07,</span><br><span class="line">    &quot;backend&quot;: &quot;theano&quot;,</span><br><span class="line">    &quot;image_dim_ordering&quot;: &quot;th&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建系统环境变量<code>THEANO_FLAGS_CPU</code>并添加<code>floatX=float32,device=cpu</code></p>
+</li>
+<li><p>创建系统环境变量<code>THEANO_FLAGS_GPU</code>并添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floatX=float32,device=cuda0,dnn.enabled=False,gpuarray.preallocate=0.8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>(注意替换C:\Fastai为你的安装位置)创建系统环境变量<code>THEANO_FLAGS_GPU_DNN</code>并添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floatX=float32,device=cuda0,optimizer_including=cudnn,gpuarray.preallocate=0.8,dnn.conv.algo_bwd_filter=deterministic,dnn.conv.algo_bwd_data=deterministic,dnn.include_path=C:/Fastai/cuda-8.0.61/include,dnn.library_path=C:/Fastai/cuda-8.0.61/lib/x64</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="测试theano"><a href="#测试theano" class="headerlink" title="测试theano"></a>测试theano</h1><p>将以下内容保存为cpu_gpu_test.py放在工作路径下(命令行前面会显示)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> theano <span class="keyword">import</span> function, config, shared, tensor</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">vlen = <span class="number">10</span> * <span class="number">30</span> * <span class="number">768</span>  <span class="comment"># 10 x #cores x # threads per core</span></span><br><span class="line">iters = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">rng = numpy.random.RandomState(<span class="number">22</span>)</span><br><span class="line">x = shared(numpy.asarray(rng.rand(vlen), config.floatX))</span><br><span class="line">f = function([], tensor.exp(x))</span><br><span class="line">print(f.maker.fgraph.toposort())</span><br><span class="line">t0 = time.time()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(iters):</span><br><span class="line">    r = f()</span><br><span class="line">t1 = time.time()</span><br><span class="line">print(<span class="string">"Looping %d times took %f seconds"</span> % (iters, t1 - t0))</span><br><span class="line">print(<span class="string">"Result is %s"</span> % (r,))</span><br><span class="line"><span class="keyword">if</span> numpy.any([isinstance(x.op, tensor.Elemwise) <span class="keyword">and</span></span><br><span class="line">              (<span class="string">'Gpu'</span> <span class="keyword">not</span> <span class="keyword">in</span> type(x.op).__name__)</span><br><span class="line">              <span class="keyword">for</span> x <span class="keyword">in</span> f.maker.fgraph.toposort()]):</span><br><span class="line">    print(<span class="string">'Used the cpu'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'Used the gpu'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>执行以下命令可查看前面设置的theano flag。(以后安装TensorFlow学习时也可将KERAS_BACKEND设置为tensorflow)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set KERAS_BACKEND=theano</span><br><span class="line">set | findstr /i theano</span><br></pre></td></tr></table></figure></p>
+<p>执行以下三个命令中的一个，即可在CPU、GPU、GPU with cuDNN三种模式之间切换，其中GPU with cuDNN模式要求GPU的计算能力达到3.0，如果低于3.0则会自动屏蔽cuDNN加速，可以在官网查到。(<a href="https://developer.nvidia.com/cuda-gpus" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-gpus</a>)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set THEANO_FLAGS=%THEANO_FLAGS_CPU%</span><br><span class="line">set THEANO_FLAGS=%THEANO_FLAGS_GPU%</span><br><span class="line">set THEANO_FLAGS=%THEANO_FLAGS_GPU_DNN%</span><br></pre></td></tr></table></figure></p>
+<p>执行<code>python cpu_gpu_test.py</code>可查看上面测试文件的测试结果，其中CPU模式下的时间为16s左右，GPU和GPU with cuDNN模式下的时间都在1s以内。</p>
+<h1 id="安装Cygwin-可选"><a href="#安装Cygwin-可选" class="headerlink" title="安装Cygwin(可选)"></a>安装Cygwin(可选)</h1><ul>
+<li>官网下载Cygwin安装文件，安装时一起安装wget、tmux、dos2unix、git、vim、openssh，即search中输入安装包名，点击安装包后的skip直到变成版本号。(keep是保留已安装的包，uninstall是卸载已安装的包)</li>
+<li>将地址<a href="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash" target="_blank" rel="noopener">git-completion</a>的代码保存为<code>C:\Fastai\cygwin64\home\YOUR NAME\.git-completion.bash</code>，并在该目录下的<code>.bashrc</code>文件中加入<code>source ~/.git-completion.bash</code></li>
+<li>在<code>C:\Fastai\cygwin64\home\YOUR NAME\.bashrc</code>加入<code>cd f:\workspace</code>这样开启Cygwin时当前目录就是f:\workspace<br>注意在Cygwin命令行跳到同样位置要用<code>cd \cygdrive\f\workspace</code></li>
+<li>去掉<code>C:\Fastai\cygwin64\home\YOUR NAME\.inputrc</code>文件中<code>set completion-ignore-case on</code>行前面的注释符号#</li>
+<li>其它一些设置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">git config --system core.fileMode false</span><br><span class="line">git config --system core.quotepath false</span><br><span class="line">git config --system color.ui true</span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;webstiffener&quot;</span><br><span class="line">git config --global user.email web.stiffener@foxmail.com</span><br><span class="line"></span><br><span class="line">git config --system alias.st status</span><br><span class="line">git config --system alias.ci &quot;commit -s&quot;</span><br><span class="line">git config --system alias.co checkout</span><br><span class="line">git config --system alias.br branch</span><br><span class="line">git config --system alias.ll &quot;log --pretty=fuller --stat --graph --decorate&quot;</span><br><span class="line">git config --system alias.ls &quot;log --pretty=oneline --graph --decorate&quot;</span><br><span class="line">git config --system alias.ss &quot;status -sb&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fast-ai/" rel="tag"># Fast.ai</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/环境搭建/" rel="tag"># 环境搭建</a>
+          
+            <a href="/tags/编程/" rel="tag"># 编程</a>
+          
+            <a href="/tags/Windows10/" rel="tag"># Windows10</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/读学笔记/f6af0952.html" rel="prev" title="写在第一份健康保险之前">
+                写在第一份健康保险之前 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Leon Xia">
+            
+              <p class="site-author-name" itemprop="name">Leon Xia</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装VS2015"><span class="nav-number">1.</span> <span class="nav-text">安装VS2015</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Anaconda"><span class="nav-number">2.</span> <span class="nav-text">安装Anaconda</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建深度学习环境dlwin27"><span class="nav-number">3.</span> <span class="nav-text">创建深度学习环境dlwin27</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装CUDA-8-0-61"><span class="nav-number">4.</span> <span class="nav-text">安装CUDA 8.0.61</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装cuDNN-v5-1-for-CUDA-8-0"><span class="nav-number">5.</span> <span class="nav-text">安装cuDNN v5.1 for CUDA 8.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装必要的python包"><span class="nav-number">6.</span> <span class="nav-text">安装必要的python包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试theano"><span class="nav-number">7.</span> <span class="nav-text">测试theano</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Cygwin-可选"><span class="nav-number">8.</span> <span class="nav-text">安装Cygwin(可选)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leon Xia</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
