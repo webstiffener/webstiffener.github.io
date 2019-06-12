@@ -12,7 +12,7 @@ tags:
 abbrlink: b0983528
 ---
 
-文 | Leon Xia
+文 | Leon Shia
 
 > 因很多人推荐去年推出的Fast.ai系列深度学习课程，决定上手学习。本指南记录了我在Windows10上搭建深度学习环境的详细过程以及踩过的坑(跑过了Lesson1.ipynb)，有需要的可以参考。本指南主要参考[https://github.com/philferriere/dlwin](https://github.com/philferriere/dlwin)，有一些改动。另外，课程的Forum [http://forums.fast.ai/](http://forums.fast.ai/)也是很不错的资源。
 
