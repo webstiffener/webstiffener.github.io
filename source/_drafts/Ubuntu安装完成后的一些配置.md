@@ -9,6 +9,11 @@ tags:
   - 编程
 abbrlink: 37631
 ---
+# 设置su即root密码
+```Shell
+sudo passwd root
+```
+
 # 添加源
 ```Shell
 sudo gedit /etc/apt/sources.list
@@ -81,6 +86,18 @@ sudo cp libflashplayer.so /usr/lib/firefox/browser/plugins
 sudo cp -r usr/* /usr
 cd ..
 sudo rm -r flash_install
+
+#安装WPS
+cd ~/Downloads
+#可手动去官网下载
+wget https://wdl1.cache.wps.cn/wps/download/ep/Linux2019/8722/wps-office_11.1.0.8722_amd64.deb
+sudo dpkg -i wps-office_10.1.0.6634_amd64.deb
+#建立字体文件夹，去网盘下载字体文件(或从Windows系统中复制)，解压到文件夹中; 或直接安装网盘中的带字体版本.deb
+sudo mkdir /usr/share/fonts/wps-office
+#消除一下缓存和生成新的缓存
+sudo mkfontscale
+sudo mkfontdir
+sudo fc-cache
 
 #安装美化工具(终端输入unity-tweak-tool可启动，如出现错误，尝试第2,3行命令)
 sudo apt-get -y install unity-tweak-tool

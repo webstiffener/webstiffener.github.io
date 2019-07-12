@@ -63,6 +63,22 @@ slmgr /skms kms.xspace.in
 slmgr /ato
 ```
 
+## 自动更新系统时间
+保存为.bat右键「以管理员身份运行」
+```Shell
+w32tm /register
+net start w32time
+w32tm /config /update
+w32tm /resync /rediscover 
+```
+
+## 解决无法关机的可能方法
+- 右键「这台电脑」→ 属性 → 控制面板主页 → 电源选项 → 选择电源按钮功能 → 
+    - 更改当前不可用设置 → 取消勾选「快速启动」
+    - 按电源按钮时 → 关机；关闭盖子时 → 不采取任何操作
+- 右键「这台电脑」→ 属性 → 设备管理 → 系统设备 → 卸载「Intel(R) Management Engine Interface」驱动
+- 右键「这台电脑」→ 属性 → 高级系统设置 → 高级 → 启动和故障恢复「设置」 → 取消勾选「自动重新启动」 
+
 ## OFFICE 2010
 - 百度盘下载Office2010专业版和KMS激活软件
 - 使用「试用密钥」安装，并用KMS激活 (有效期为6个月，后需重新激活)。杀毒软件会报错，设置成安全即可。
@@ -116,5 +132,7 @@ git config --system alias.ss "status -sb"
 **重点：安装引导启动器的设备 → 以上「efi系统分区」对于盘符**
 - 等待安装完成
 - 参考《Ubuntu安装完成后的一些配置》进行配置
-- 重启电脑，按F1进入Bios，找到Security Boot并改回Enabled，保存退出
+- 重启电脑，按F1进入Bios →     
+    - 在Config的Display中选择集成显卡(即不使用独显, 防止发热严重), 使用`lspci |grep -i vga`只显示集成显卡的描述
+    - 找到Security Boot并改回Enabled，保存退出
 
